@@ -1,0 +1,72 @@
+{
+  "consumer": {
+    "name": "ATD19_OrderWeb"
+  },
+  "provider": {
+    "name": "ATD19_OrderApi"
+  },
+  "interactions": [
+    {
+      "description": "a request for orders",
+      "providerState": "there are orders",
+      "request": {
+        "method": "GET",
+        "path": "/orders"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": [
+          {
+            "id": 1,
+            "items": [
+              {
+                "name": "burger",
+                "quantity": 2,
+                "totalvalue": 100
+              }
+            ]
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 1
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].items": {
+            "min": 1
+          },
+          "$.body[*].items[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for orders",
+      "providerState": "there are no orders",
+      "request": {
+        "method": "GET",
+        "path": "/orders"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": [
+
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
